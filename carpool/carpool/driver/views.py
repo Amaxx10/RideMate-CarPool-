@@ -40,7 +40,7 @@ def searchRider(request):
 	rideList = []
 	print(riderSet)
 	print("####################----------------------------------------------------------------------------------------")
-	gmaps = googlemaps.Client(key='AIzaSyB64EM3P7XmfNlop7aUjzacIXAQJVAMjkA')
+	gmaps = googlemaps.Client(key='AIzaSyDkjrKQpyT2ps1ZrKpe8aJmb2wWbr5GlsQ')
 	print("@@@@@@@@@@@@@@@@@@@@@----------------------------------------------------------------------------------------")
 	driverRoutePoints = gmaps.directions((float(liveLat) ,float(liveLong)), driver_dest, mode="driving")
 	# print(len(driverRoutePoints[0]))
