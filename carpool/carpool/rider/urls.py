@@ -21,6 +21,7 @@ urlpatterns = [
 	path('submit', views.rideInfo, name = "rideInfo"),
 	path('processsing', views.statusUpdate, name = "statusUpdate"),
 	path('success', views.rideSuccessful, name = "rideSuccessful"),
+    path('ride_confirmation/', views.ride_confirmation, name = "ride_confirmation"),  # Added trailing slash
 	# path('rideRemove', views.endRide, name = "endRide"),
 ]
 

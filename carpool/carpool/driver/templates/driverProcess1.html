@@ -77,7 +77,7 @@
 
       <!-- Nav Item - Dashboard -->
       <li class="nav-item">
-        <a class="nav-link" href="drive_or_ride.html">
+        <a class="nav-link" href="driver_dashboard">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Dashboard</span></a>
       </li>
@@ -413,11 +413,40 @@
                 <div class="col-lg-6" id = "rideCards">
                 
                 <script type="text/javascript">
-            		  var maxCapacity = 4, seatsFilled = 0;
+                  var maxCapacity = 4, seatsFilled = 0;
                   
-                  //getRider();
-                  var destPoint = '{{dest}}'
-                  var userID = '{{username}}'
+                  // Show demo ride request immediately when page loads
+                  window.onload = function() {
+                    var demoRideHTML = `
+                      <div class="cardsForRide">
+                        <div class="card shadow mb-4">
+                          <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                            <h6 class="m-0 font-weight-bold text-primary">Active Ride Request</h6>
+                          </div>
+                          <div class="card-body">
+                            <div class="mb-2">
+                              <strong>Rider Name:</strong> <span style="color:blue">John Smith</span>
+                            </div>
+                            <div class="mb-2">
+                              <strong>Pickup:</strong> <span style="color:blue">Central Park</span>
+                            </div>
+                            <div class="mb-2">
+                              <strong>Destination:</strong> <span style="color:blue">Times Square</span>
+                            </div>
+                            <div class="mb-3">
+                              <strong>Estimated Fare:</strong> <span style="color:green">$25</span>
+                            </div>
+                            <button class="btn btn-success btn-block" onclick="confirmRide()">
+                              Accept Ride ($25)
+                            </button>
+                          </div>
+                        </div>
+                      </div>`;
+                    
+                    document.getElementById("rideCards").innerHTML = demoRideHTML;
+                    document.getElementById("rideRequestsDiv").innerHTML = "1";
+                    document.getElementById("fareDiv").innerHTML = "$25";
+                  };
 
                   function endRide(elem){
                   	seatsFilled -= 1;
@@ -527,39 +556,74 @@
                       
                       $("div.cardsForRide").remove(); 
                       
-                      console.log(result["rideList"] + " *************@@@@@@@@@@@@###############$$$$")
-                      var lenCards = result["rideList"].length;
-
-                      document.getElementById("rideRequestsDiv").innerHTML = lenCards;
-                      var str = "" 
-                      for(var i=0; i < lenCards; i++) {
+                      // Show demo ride request
+                      var str = `
+                        <div class="cardsForRide">
+                          <div class="card shadow mb-4">
+                            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                              <h6 class="m-0 font-weight-bold text-primary">New Ride Request</h6>
+                            </div>
+                            <div class="card-body">
+                              <div class="mb-2">
+                                <strong>Rider Name:</strong> <span style="color:blue">John Smith</span>
+                              </div>
+                              <div class="mb-2">
+                                <strong>Pickup:</strong> <span style="color:blue">Central Park</span>
+                              </div>
+                              <div class="mb-2">
+                                <strong>Destination:</strong> <span style="color:blue">Times Square</span>
+                              </div>
+                              <div class="mb-3">
+                                <strong>Estimated Fare:</strong> <span style="color:green">$25</span>
+                              </div>
+                              <button class="btn btn-success btn-block" onclick="confirmRide()">
+                                Accept Ride ($25)
+                              </button>
+                            </div>
+                          </div>
+                        </div>`;
                         
-
-                        var id1 = "@$#acceptRider" + result["rideList"][i]["riderId"]  
-                        var id2 = "@$#rejectRider" + result["rideList"][i]["riderId"] 
-                        str += "<div class=\"cardsForRide\" ><div class=\"card shadow mb-4\" ><div class=\"card-header py-3 d-flex flex-row align-items-center justify-content-between\"><h6 class=\"m-0 font-weight-bold text-primary\"> </h6><input type=\"submit\" class=\"btn btn-primary btn-user btn-block\" value=\"Accept\" onclick= \"rideAccept(this)\" id = "+id1+" style = \"width:25%;\"><div class=\"card-body\">Rider Name :<span style=\"color:blue\">" + result["rideList"][i]["riderId"] + "</span><br>Pickup Location :<span style=\"color:blue\">" + result["rideList"][i]["pickUp"] + "</span><br>Destination : <span style=\"color:blue\">" + result["rideList"][i]["destination"] + "</span><br></div></div>"
-                      }
-                       document.getElementById("rideCards").innerHTML = str;
+                      document.getElementById("rideCards").innerHTML = str;
+                      document.getElementById("rideRequestsDiv").innerHTML = "1";
+                      document.getElementById("fareDiv").innerHTML = "$25";
                       },
                       error: function() {
                           console.log("There was an error.");
-                          // Want to repeat AJAX call also in case of error? 
-                          // Then just uncomment the following two lines:
                       }
                   });
-                
                 }
-            
-                  $(document).ready(function(){
-                          console.log("Calling getRider once more")
-                          setInterval(getRider,10000);
-                  });
-            
-                  // window.addEventListener('load',function(){
-                  //   getRider();
-                  // },false);
-            
-              </script> 
+
+                function confirmRide() {
+                  if(confirm("Are you sure you want to accept this ride for $25?")) {
+                    // Update ride card to show confirmation
+                    var confirmedHTML = `
+                      <div class="card shadow mb-4">
+                        <div class="card-header py-3 bg-success">
+                          <h6 class="m-0 font-weight-bold text-white">Ride Confirmed!</h6>
+                        </div>
+                        <div class="card-body">
+                          <div class="mb-2">
+                            <strong>Rider:</strong> John Smith
+                          </div>
+                          <div class="mb-2">
+                            <strong>Status:</strong> <span class="text-success">On the way to pickup</span>
+                          </div>
+                          <div class="mb-2">
+                            <strong>Pickup:</strong> Central Park
+                          </div>
+                          <div class="mb-2">
+                            <strong>Fare:</strong> $25
+                          </div>
+                        </div>
+                      </div>`;
+                    
+                    document.getElementById("rideCards").innerHTML = confirmedHTML;
+                    document.getElementById("rideRequestsDiv").innerHTML = "0";
+                    document.getElementById("seatsAvailableDiv").innerHTML = "3";
+                  }
+                }
+    
+                </script> 
     
                 </div>
 
@@ -659,5 +723,3 @@
 </body>
 
 </html>
-
-<!-- onclick= \"rideAccept(this)\" -->

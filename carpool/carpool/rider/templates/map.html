@@ -1,0 +1,123 @@
+<style>
+    #map {
+        height: 600px;
+        width: 100%;
+    }
+    .ride-details {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        display: none;
+        z-index: 1000;
+    }
+    .confirm-btn {
+        background: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    .close-btn {
+        background: #f44336;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-left: 10px;
+    }
+</style>
+
+<div id="map"></div>
+
+<div id="rideDetails" class="ride-details">
+    <h3>Ride Details</h3>
+    <p id="driverName"></p>
+    <p id="estimatedCost"></p>
+    <p id="distance"></p>
+    <p id="duration"></p>
+    <button class="confirm-btn" onclick="confirmRide()">Confirm Ride</button>
+    <button class="close-btn" onclick="closeDetails()">Close</button>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<script>
+    const map = L.map('map').setView([19.0760, 72.8777], 12);
+    
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    // Mumbai locations
+    const drivers = [
+        {
+            lat: 19.0760, 
+            lng: 72.8777, 
+            title: "Driver 1 - Available",
+            name: "Rahul Kumar",
+            cost: "₹250",
+            distance: "5.2 km",
+            duration: "25 mins"
+        },
+        {
+            lat: 19.0596, 
+            lng: 72.8295, 
+            title: "Driver 2 - Available",
+            name: "Priya Singh",
+            cost: "₹320",
+            distance: "7.8 km",
+            duration: "35 mins"
+        },
+        {
+            lat: 19.1176, 
+            lng: 72.8791, 
+            title: "Driver 3 - Available",
+            name: "Amit Patel",
+            cost: "₹180",
+            distance: "3.5 km",
+            duration: "15 mins"
+        },
+        {
+            lat: 19.0549, 
+            lng: 72.9448, 
+            title: "Driver 4 - Available",
+            name: "Deepak Sharma",
+            cost: "₹400",
+            distance: "9.1 km",
+            duration: "45 mins"
+        }
+    ];
+
+    drivers.forEach(driver => {
+        const marker = L.marker([driver.lat, driver.lng])
+            .bindPopup(driver.title)
+            .addTo(map);
+
+        marker.on('click', () => showRideDetails(driver));
+    });
+
+    function showRideDetails(driver) {
+        const details = document.getElementById('rideDetails');
+        document.getElementById('driverName').textContent = `Driver: ${driver.name}`;
+        document.getElementById('estimatedCost').textContent = `Estimated Cost: ${driver.cost}`;
+        document.getElementById('distance').textContent = `Distance: ${driver.distance}`;
+        document.getElementById('duration').textContent = `Estimated Time: ${driver.duration}`;
+        details.style.display = 'block';
+        // Store driver data for confirmation
+        sessionStorage.setItem('rideData', JSON.stringify(driver));
+    }
+
+    function closeDetails() {
+        document.getElementById('rideDetails').style.display = 'none';
+    }
+
+    function confirmRide() {
+        window.location.href = '/rider/ride_confirmation';
+    }
+</script>

@@ -67,6 +67,9 @@ def rideSuccessful(request):
 	#return render(request, 'polls/results.html', {'rideDetails': rideDetails})
 	return HttpResponse("<h1>SUCCESS </h1>")
 
+def ride_confirmation(request):
+	return render(request, "ride_confirmation.html")
+
 # def endRide(request):
 # 	print(request.GET['id'], "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^")
 # 	ride.objects.filter(pk=request.GET['id']).delete()

@@ -17,6 +17,9 @@ def driverHome(request):
 	print(request.user.username)	
 	return render(request , "driverHome.html" , {'username' : request.user.username})
 
+def driver_dashboard(request):
+	return render(request, "driver_dashboard.html", {'username': request.user.username})
+
 def driverInfo(request):
 	print(request.user.username + " driveInfo")
 	print(request.POST['destination'])
@@ -148,5 +151,4 @@ def endRide(request):
 	print(acceptList)
 	print("------------------------------------------------- "+str(r.cost) + " ----------------------------------------------")
 	return JsonResponse({'success' : True , 'acceptList' : acceptList, 'cost' : r.cost})
-	
 

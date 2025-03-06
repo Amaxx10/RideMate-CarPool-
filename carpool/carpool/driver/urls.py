@@ -11,5 +11,6 @@ urlpatterns = [
 	path('driveProcess' ,views.searchRider , name = "searchRider"),
 	path('accept' ,views.acceptRider , name = "acceptRider" ),
 	path('end', views.endRide , name ="endRide"),
+    path('driver_dashboard', views.driver_dashboard, name='driver_dashboard'),
 ]
 

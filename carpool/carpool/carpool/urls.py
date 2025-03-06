@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.shortcuts import redirect
+from django.views.generic import TemplateView
 
 def home_redirect(request):
     return redirect('/login/')
@@ -25,5 +26,6 @@ urlpatterns = [
     path('', home_redirect),
     path('login/', include('logPage.urls')),
     path('rider/', include('rider.urls')),
-    path('driver/', include('driver.urls'))
+    path('driver/', include('driver.urls')),
+    path('map/', TemplateView.as_view(template_name='map.html'), name='map'),
 ]
