@@ -1,0 +1,14 @@
+<!-- ...existing code... -->
+<form method="post" action="{% url 'addUser' %}">
+    {% csrf_token %}
+    <!-- ...existing form fields... -->
+    <div class="form-group">
+        <select name="role" class="form-control" required>
+            <option value="">Select Role</option>
+            <option value="driver">Driver</option>
+            <option value="rider">Rider</option>
+        </select>
+    </div>
+    <!-- ...existing submit button... -->
+</form>
+<!-- ...existing code... -->

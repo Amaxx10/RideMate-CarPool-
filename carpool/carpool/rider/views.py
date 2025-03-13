@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.http import HttpResponse ,Http404
 from django.template import loader
 from django.shortcuts import render , get_object_or_404
@@ -70,8 +70,107 @@ def rideSuccessful(request):
 def ride_confirmation(request):
 	return render(request, "ride_confirmation.html")
 
-# def endRide(request):
-# 	print(request.GET['id'], "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^")
-# 	ride.objects.filter(pk=request.GET['id']).delete()
-# 	print("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^6")
-# 	return render(request , "drive_or_ride.html" , {'user': request.GET['id']})
+def search_rides(request):
+    if request.method == "GET":
+        return render(request, "search_rides.html")
+    elif request.method == "POST":
+        origin = request.POST.get('origin')
+        destination = request.POST.get('destination')
+        date = request.POST.get('date')
+        
+        available_rides = ride.objects.filter(
+            status=False,
+            pickUp__icontains=origin,
+            destination__icontains=destination
+        )
+        
+        return render(request, "search_rides.html", {
+            'rides': available_rides,
+            'search_performed': True
+        })
+
+def offer_ride(request):
+    if request.method == "GET":
+        return render(request, "offer_ride.html")
+    elif request.method == "POST":
+        new_ride = ride(
+            userId=request.user.username,
+            pickUp=request.POST['pickup'],
+            destination=request.POST['destination'],
+            expectedTime=request.POST.get('expected_time', '30'),
+            status=False,
+            complete=False
+        )
+        new_ride.save()
+        return render(request, "ride_confirmation.html", {'ride': new_ride})
+
+def my_rides(request):
+    user_rides = ride.objects.filter(userId=request.user.username)
+    return render(request, "my_rides.html", {
+        'rides': user_rides,
+        'username': request.user.username
+    })
+
+def dashboard(request):
+    if not request.user.is_authenticated:
+        return redirect('logPage:index')
+
+    try:
+        total_rides = ride.objects.filter(userId=request.user.username).count()
+        completed_rides = ride.objects.filter(userId=request.user.username, complete=True).count()
+        
+        context = {
+            'total_rides': total_rides,
+            'points': completed_rides * 10,
+            'username': request.user.username
+        }
+        return render(request, 'riderDashboard.html', context)
+    except Exception as e:
+        print(f"Dashboard error: {e}")
+        return redirect('rider:ride')
+
+def coupons(request):
+    if not request.user.is_authenticated:
+        return redirect('logPage:index')
+        
+    sample_coupons = [
+        {'code': 'RIDE10', 'description': '10% off your next ride', 'valid_until': '2024-12-31'},
+        {'code': 'FIRST50', 'description': '50% off your first ride', 'valid_until': '2024-12-31'},
+    ]
+    return render(request, 'riderCoupons.html', {
+        'coupons': sample_coupons,
+        'username': request.user.username
+    })
+
+def ride_history(request):
+    if not request.user.is_authenticated:
+        return redirect('logPage:index')
+        
+    # rides_history = ride.objects.filter(userId=request.user.username).order_by('-id')
+    formatted_rides = [{
+            'date': '05/02/2025',
+            'pickup': 'Bhopal Railway Station, Bajariya, Navbahar Colony, Bhopal, Madhya Pradesh, India',
+            'destination': 'New Delhi, Delhi, India',
+            'amount': 1000,
+            'status': 'Completed'
+        },{
+            'date': '02/01/2025',
+            'pickup': 'CSMT, Mumbai, Maharashtra, India',
+            'destination': 'Andheri, Mumbai, Maharashtra, India',
+            'amount': 457,
+            'status': 'Pending'
+        }]
+    
+    # for r in rides_history:
+    #     formatted_rides.append({
+    #         'date': r.id,
+    #         'pickup': r.pickUp,
+    #         'destination': r.destination, 
+    #         'amount': r.cost,
+    #         'status': 'Completed' if r.complete else 'Ongoing' if r.status else 'Pending'
+    #     })
+    
+    return render(request, 'riderHistory.html', {
+        'rides': formatted_rides,
+        'username': request.user.username
+    })

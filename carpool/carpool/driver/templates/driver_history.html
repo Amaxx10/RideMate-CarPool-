@@ -1,0 +1,83 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Driver History - HitchRide</title>
+    <link href="{% static 'css/sb-admin-2.css' %}" rel="stylesheet">
+</head>
+<body id="page-top">
+    {% include 'navbar.html' %}
+  <div id="wrapper">
+    <!-- Sidebar -->
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{% url 'driver:driver_dashboard' %}">
+        <div class="sidebar-brand-icon rotate-n-15">
+          <i class="fas fa-car"></i>
+        </div>
+        <div class="sidebar-brand-text mx-3">HitchRide</div>
+      </a>
+
+      <hr class="sidebar-divider my-0">
+
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'driver:driver_dashboard' %}">
+          <i class="fas fa-fw fa-tachometer-alt"></i>
+          <span>Dashboard</span>
+        </a>
+      </li>
+
+      <hr class="sidebar-divider">
+
+      <li class="nav-item active">
+        <a class="nav-link" href="{% url 'driver:driver_history' %}">
+          <i class="fas fa-fw fa-history"></i>
+          <span>Ride History</span>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'driver:driver_coupons' %}">
+          <i class="fas fa-fw fa-gift"></i>
+          <span>Coupons</span>
+        </a>
+      </li>
+    </ul>
+    <!-- ...rest of your content... -->
+
+    <div class="container mt-5">
+        <h2>Your Ride History</h2>
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Recent Rides</h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Rider</th>
+                                <th>From</th>
+                                <th>To</th>
+                                <th>Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>2023-05-01</td>
+                                <td>John Doe</td>
+                                <td>Central Park</td>
+                                <td>Times Square</td>
+                                <td>$25</td>
+                            </tr>
+                            <!-- Add more rows as needed -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+</body>
+</html>

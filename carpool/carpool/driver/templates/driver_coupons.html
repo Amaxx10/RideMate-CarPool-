@@ -1,0 +1,66 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Driver Coupons - HitchRide</title>
+    <link href="{% static 'css/sb-admin-2.css' %}" rel="stylesheet">
+</head>
+<body id="page-top">
+    {% include 'navbar.html' %}
+  <div id="wrapper">
+    <!-- Sidebar -->
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{% url 'driver:driver_dashboard' %}">
+        <div class="sidebar-brand-icon rotate-n-15">
+          <i class="fas fa-car"></i>
+        </div>
+        <div class="sidebar-brand-text mx-3">HitchRide</div>
+      </a>
+
+      <hr class="sidebar-divider my-0">
+
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'driver:driver_dashboard' %}">
+          <i class="fas fa-fw fa-tachometer-alt"></i>
+          <span>Dashboard</span>
+        </a>
+      </li>
+
+      <hr class="sidebar-divider">
+
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'driver:driver_history' %}">
+          <i class="fas fa-fw fa-history"></i>
+          <span>Ride History</span>
+        </a>
+      </li>
+
+      <li class="nav-item active">
+        <a class="nav-link" href="{% url 'driver:driver_coupons' %}">
+          <i class="fas fa-fw fa-gift"></i>
+          <span>Coupons</span>
+        </a>
+      </li>
+    </ul>
+    <!-- ...rest of your content... -->
+    <div class="container mt-5">
+        <h2>Available Coupons</h2>
+        <div class="row">
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-primary shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                            NEWDRIVER
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">20% OFF</div>
+                        <small class="text-muted">Valid until 2023-12-31</small>
+                    </div>
+                </div>
+            </div>
+            <!-- Add more coupon cards as needed -->
+        </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -21,9 +21,9 @@ def driver_dashboard(request):
 	return render(request, "driver_dashboard.html", {'username': request.user.username})
 
 def driverInfo(request):
-	print(request.user.username + " driveInfo")
-	print(request.POST['destination'])
-	return render(request , "driverProcess1.html" , {'username' : request.user.username , 'dest' : request.POST['destination']})
+	# print(request.user.username + " driveInfo")
+	# print(request.POST['destination'])
+	return render(request , "driverProcess1.html")
 
 def searchRider(request):
 	print("@@@@@@@@@@@@@@@@@@@@@@@@@*******************&&&&&&&&&&&&&&&&&&&&&&&&&&&**********************")
@@ -151,4 +151,10 @@ def endRide(request):
 	print(acceptList)
 	print("------------------------------------------------- "+str(r.cost) + " ----------------------------------------------")
 	return JsonResponse({'success' : True , 'acceptList' : acceptList, 'cost' : r.cost})
+
+def driver_history(request):
+    return render(request, "driver_history.html", {'username': request.user.username})
+
+def driver_coupons(request):
+    return render(request, "driver_coupons.html", {'username': request.user.username})
 

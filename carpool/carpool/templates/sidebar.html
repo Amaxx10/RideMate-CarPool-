@@ -1,0 +1,54 @@
+<!-- Sidebar -->
+<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+    <!-- Sidebar - Brand -->
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{% url 'rider:ride' %}">
+        <div class="sidebar-brand-icon">
+            <i class="fas fa-car"></i>
+        </div>
+        <div class="sidebar-brand-text mx-3">HitchRide</div>
+    </a>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider">
+
+    <!-- Nav Item - Dashboard -->
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'rider:dashboard' %}">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Dashboard</span>
+        </a>
+    </li>
+
+    <!-- Nav Item - Book Ride -->
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'rider:ride' %}">
+            <i class="fas fa-fw fa-taxi"></i>
+            <span>Book Ride</span>
+        </a>
+    </li>
+
+    <!-- Nav Item - My Rides -->
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'rider:my_rides' %}">
+            <i class="fas fa-fw fa-list"></i>
+            <span>My Rides</span>
+        </a>
+    </li>
+
+    <!-- Nav Item - History -->
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'rider:history' %}">
+            <i class="fas fa-fw fa-history"></i>
+            <span>Ride History</span>
+        </a>
+    </li>
+
+    <!-- Nav Item - Coupons -->
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'rider:coupons' %}">
+            <i class="fas fa-fw fa-ticket-alt"></i>
+            <span>Coupons</span>
+        </a>
+    </li>
+</ul>
+<!-- End of Sidebar -->

@@ -23,5 +23,11 @@ urlpatterns = [
 	path('success', views.rideSuccessful, name = "rideSuccessful"),
     path('ride_confirmation/', views.ride_confirmation, name = "ride_confirmation"),  # Added trailing slash
 	# path('rideRemove', views.endRide, name = "endRide"),
+    path('search/', views.search_rides, name='search_rides'),
+    path('offer/', views.offer_ride, name='offer_ride'),
+    path('my-rides/', views.my_rides, name='my_rides'),
+    path('dashboard/', views.dashboard, name='dashboard'),  # Changed from riderDashboard/
+    path('coupons/', views.coupons, name='coupons'),
+    path('history/', views.ride_history, name='history'),
 ]
 
